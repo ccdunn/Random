@@ -7,9 +7,13 @@ items = {'mug','socks','mammut hat','tshirt',...
 
 % everyone's ranking of the objects. Subtracted from 13 so that more
 % desired objects are a higher value
-J = 13 - [ 1  2  3  4  5  6  7  8  9 10 11 12 13];
-A = 13 - [ 4  6  1  2  3  9 11  7  5 12 10 13  8];
-C = 13 - [ 5  1  9 12  4  6  3  7  2 13  8 11 10];
+J = 14 - [ 1  2  3  4  5  6  7  8  9 10 11 12 13];
+A = 14 - [ 4  6  1  2  3  9 11  7  5 12 10 13  8];
+C = 14 - [ 5  1  9 12  4  6  3  7  2 13  8 11 10];
+
+J = 2.^(J);
+A = 2.^(A);
+C = 2.^(C);
 
 
 %loop through all possible combinations (only works for ~13 items and ~3 people)
@@ -89,28 +93,52 @@ for aa = 1:3
     end
 end
 
-%find mean score from each combination
-mean_score = (J_score + A_score + C_score)/3;
+J_score = J_score./sum(J);
+A_score = A_score./sum(A);
+C_score = C_score./sum(C);
 
-%find variance from each combination
-var_score = sqrt((J_score - mean_score).^2 + (A_score - mean_score).^2 + (C_score - mean_score).^2);
+step = .001;
+lambdas = step:step:1 - step;
+for ll = 1:length(lambdas)
+    %find mean score from each combination
+    mean_score = (J_score + A_score + C_score)/3;
+    
+    %find variance from each combination
+    var_score = sqrt((J_score - mean_score).^2 + (A_score - mean_score).^2 + (C_score - mean_score).^2);
+    
+    %now, we want a solution that is a combination of high mean score and small
+    %variance (so most overall happiness with least envy)
+    %use lambda to weight between these two different criteria
+    %high lambda weights overal happiness, low lambda weights fairness
+    lambda = lambdas(ll);
+    %lambda = .00000001 and .9999999 are interesting
+    fs = -lambda*mean_score + (1-lambda)*var_score;
+    
+    %find minimum of cost function
+    [m,mi] = min(fs(:));
+    [fa(1),fa(2),fa(3),fa(4),fa(5),fa(6),fa(7),fa(8),fa(9),fa(10),fa(11),fa(12),fa(13)] = ind2sub(size(J_score),mi);
+    
+    J_items{ll} = items(find(fa==1));
+    A_items{ll} = items(find(fa==2));
+    C_items{ll} = items(find(fa==3));
+    
+    Js(ll) = J_score(mi);
+    As(ll) = A_score(mi);
+    Cs(ll) = C_score(mi);
+    ms(ll) = mean_score(mi);
+    vs(ll) = var_score(mi);
+end
 
-%now, we want a solution that is a combination of high mean score and small
-%variance (so most overall happiness with least envy)
-%use lambda to weight between these two different criteria
-%high lambda weights overal happiness, low lambda weights fairness
-lambda = .5;
-%lambda = .00000001 and .9999999 are interesting
-fs = -lambda*mean_score + (1-lambda)*var_score;
+plot(lambdas,Js,'r');
+hold on;
+plot(lambdas,As,'g');
+plot(lambdas,Cs,'b');
+plot(lambdas,ms,'k--');
+plot(lambdas,vs,'k-.');
+hold off;
 
-%find minimum of cost function
-[m,mi] = min(fs(:));
-[fa(1),fa(2),fa(3),fa(4),fa(5),fa(6),fa(7),fa(8),fa(9),fa(10),fa(11),fa(12),fa(13)] = ind2sub(size(J_score),mi);
+xlabel('lambda');
+ylabel('happiness');
 
-J_items = items(find(fa==1))
-A_items = items(find(fa==2))
-C_items = items(find(fa==3))
-
-% [J_score(mi), A_score(mi), C_score(mi)]
-% [mean_score(mi), var_score(mi)]
+legend({'Jeff','Ashin','Charlie','Mean','Variance'},'Location','Northwest');
 
