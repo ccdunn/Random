@@ -1,0 +1,1 @@
+type('~/Documents/MATLAB/personal/quine.m');

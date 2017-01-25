@@ -1,0 +1,157 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf340
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fswiss\fcharset0 ArialMT;\f2\fnil\fcharset0 Verdana;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red217\green217\blue217;\red0\green0\blue255;
+\red251\green0\blue7;\red255\green255\blue11;\red133\green0\blue255;\red253\green134\blue8;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 Number of connected components.
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 5 conn. components
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl420\sa213\qj\partightenfactor0
+
+\f2 \cf2 \cb3  \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{
+\b \cf4 \strokec4 1
+\b0 ,
+\b  1
+\b0 \cf2 \strokec2 , 0, 0, 0\},\cb1 \uc0\u8232 \cb3  \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{0,\cf4 \strokec4  
+\b 1
+\b0 \cf2 \strokec2 , 0, 0, 
+\b \cf5 \strokec5 1
+\b0 \cf2 \strokec2 \},\cb1 \uc0\u8232 \cb3  \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{
+\b \cf4 \strokec4 1
+\b0 \cf2 \strokec2 , 0, 0, 
+\b \cf5 \strokec5 1
+\b0 , 
+\b 1
+\b0 \cf2 \strokec2 \},\cb1 \uc0\u8232 \cb3  \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{0, 0, 0, 0, 0\},\cb1 \uc0\u8232 \cb3  \'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\{
+\b \cf6 \strokec6 1
+\b0 \cf2 \strokec2 , 0, 
+\b \cf7 \strokec7 1
+\b0 \cf2 \strokec2 , 0, 
+\b \cf8 \strokec8 1
+\b0 \cf2 \strokec2 \}
+\f0 \cb1 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 Function count = connected_component_count(A)
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 A = A>0;
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 Count = 0;
+\f0\fs24 \
+
+\f1\fs30 Se = strel(\'91neighborhood\'92,ones(3));
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 while(1)
+\f0\fs24 \
+
+\f1\fs30 C_ind = find(A,1);
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 if(isempty(C_ind))
+\f0\fs24 \
+
+\f1\fs30 Return count;
+\f0\fs24 \
+
+\f1\fs30 End
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 Count = count + 1;
+\f0\fs24 \
+
+\f1\fs30 [cx,cy] = sub2ind(C_ind,size(A));%x,y coords
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 C = zeros(size(A));
+\f0\fs24 \
+
+\f1\fs30 C(cx,cy) = 1;
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 while(1)
+\f0\fs24 \
+
+\f1\fs30 Cprev = sum(C(:));
+\f0\fs24 \
+
+\f1\fs30 C = A.*imdilate(C,se);
+\f0\fs24 \
+
+\f1\fs30 If (sum(C(:))==sum(Cprev(:)))
+\f0\fs24 \
+\pard\pardeftab720\fi960\sl400\partightenfactor0
+
+\f1\fs30 \cf2 Break
+\f0\fs24 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 End
+\f0\fs24 \
+
+\f1\fs30 End
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 A = A - C;
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 End
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f1\fs30 \cf2 end
+\f0\fs24 \
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 \
+\
+\
+}
