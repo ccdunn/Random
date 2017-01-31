@@ -23,7 +23,7 @@ vii1(1,:,:) = [xs.',ys.'];
 im = squeeze(ims(:,:,:,1));
 imgs = rgb2gray(im);
 
-doplots = 0;
+doplots = 1;
 
 % Initialize features for I(1)
 points = detectSURFFeatures(imgs,'MetricThreshold',64);
@@ -58,13 +58,6 @@ end
 for ii = 2:size(ims,4)
     im = squeeze(ims(:,:,:,ii));
     imgs = rgb2gray(im);
-    H = hough(edge(imgs,'canny'));
-    H = round(1000*H./max(H(:)));
-    P = houghpeaks(H,8,'Threshold',250);
-    %
-    %     for ii = 1:7
-    %         for ii+1:8
-    %             p(end+1,:) =
     
     % Store points and features for I(n-1).
     pointsPreviousPrevious = pointsPrevious;
@@ -133,16 +126,16 @@ vii = vii_orig;
 
 % vii = vii1;
 
-N = 20;
-ff = .5*(1-cos((2*pi*(0:19))/(N-1)));
-ff = ff./sum(ff(:));
-
-normvii = conv(ones(size(vii(:,1,1))),ff,'same');
-for ii = 1:5
-    for jj = 1:2
-        vii(:,ii,jj) = conv(vii(:,ii,jj),ff,'same')./normvii;
-    end
-end
+% N = 20;
+% ff = .5*(1-cos((2*pi*(0:19))/(N-1)));
+% ff = ff./sum(ff(:));
+% 
+% normvii = conv(ones(size(vii(:,1,1))),ff,'same');
+% for ii = 1:5
+%     for jj = 1:2
+%         vii(:,ii,jj) = conv(vii(:,ii,jj),ff,'same')./normvii;
+%     end
+% end
 
 doplots = 1;
 if doplots
